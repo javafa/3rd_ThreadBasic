@@ -105,30 +105,8 @@ public class RainActivity extends AppCompatActivity {
         }
     }
 
-    class Stage extends View {
-        Paint paint;
-        List<RainDrop> rainDrops = new ArrayList<>();
-        public Stage(Context context) {
-            super(context);
-            paint = new Paint();
-            paint.setColor(Color.BLUE);
-        }
-
-        // 화면에 로드되는 순간 호출되는 함수
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            //               x좌표, y좌표, 반지름, 컬러,굵기 등
-            for(RainDrop drop : rainDrops) {
-                canvas.drawCircle(drop.x, drop.y, drop.radius, drop.paint);
-            }
-        }
-
-        public void addRainDrop(RainDrop rainDrop){
-            this.rainDrops.add(rainDrop);
-        }
-    }
-
+    // 빗방울 클래스
+    // 생성되는 순간 자신의 생명주기를 갖고 동작한다.
     class RainDrop extends Thread {
         Paint paint; // 색깔
 
@@ -154,6 +132,31 @@ public class RainActivity extends AppCompatActivity {
                 }
             }
             run = false;
+        }
+    }
+
+    // 화면을 그릴 수 있는 클래스
+    class Stage extends View {
+        Paint paint;
+        List<RainDrop> rainDrops = new ArrayList<>();
+        public Stage(Context context) {
+            super(context);
+            paint = new Paint();
+            paint.setColor(Color.BLUE);
+        }
+
+        // 화면에 로드되는 순간 호출되는 함수
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            //               x좌표, y좌표, 반지름, 컬러,굵기 등
+            for(RainDrop drop : rainDrops) {
+                canvas.drawCircle(drop.x, drop.y, drop.radius, drop.paint);
+            }
+        }
+
+        public void addRainDrop(RainDrop rainDrop){
+            this.rainDrops.add(rainDrop);
         }
     }
 }
